@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            /* todo: create own background picture and upload */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .circle {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background: transparent;
+            /*opacity: .9;*/
+            border-radius: 50%;
+        }
+
+        .central-picture {
+            position: inherit;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 270px;
+            height: 270px;
+        }
+
+        .text {
+            position: absolute;
+            top: 42%;
+            left: 42%;
+            width: 100px;
+            height: 100px;
+            display: table;
+            text-align: center;
+            font-family: monospace;
+            font-size: 21px;
+            /*color: #FF5733; */
+        }
+
+        .text:nth-child(1) { transform: rotate(216deg) translateY(-180%); }
+        .text:nth-child(2) { transform: rotate(288deg) translateY(-180%); }
+        .text:nth-child(3) { transform: rotate(360deg) translateY(-180%); }
+        .text:nth-child(4) { transform: rotate(72deg) translateY(-180%); }
+        .text:nth-child(5) { transform: rotate(144deg) translateY(-180%); }
+        .text:nth-child(6) { transform: rotate(216deg) translateY(-180%); }
+    </style>
+</head>
+<body>
+    <div class="circle">
+        <!-- https://freesvg.org/echidna-vector-clip-art -->
+        <img class="central-picture" src="echidna.svg" alt="an echidna">
+        <div class="text">my github</div>
+        <div class="text">my methadon</div>
+        <div class="text">cool stuff</div>
+        <!--div class="text">this is a really long thing, it goes on for aaages and when you think it's stopped -- there's more!</div-->
+        <div class="text">...</div>
+        <div class="text">...</div>
+    </div>
+</body>
+</html>
+
