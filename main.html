@@ -7,15 +7,30 @@
         body {
             margin: 0;
             padding: 0;
-            /* todo: create own background picture and upload */
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+			background-color: #f0f0f0;
+        }
+        
+        #pixelCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-auto-rows: 1fr;
+            gap: 0;
+            /*width: 100vw;
+            height: 100vh;*/
+        }
+
+        .pixel {
+            width: calc(max(100vh, 100vw) / 8);
+            height: calc(max(100vh, 100vw) / 8);
         }
 
         .circle {
@@ -58,16 +73,50 @@
     </style>
 </head>
 <body>
+    <div id="pixelCanvas"></div>
+    <script>
+        function createRandomPixels() {
+            const pixelCanvas = document.getElementById('pixelCanvas');
+            for (let i = 0; i < 64; i++) {
+                const pixel = document.createElement('div');
+                pixel.classList.add('pixel');
+                pixel.style.backgroundColor = generateColorVariant(getRandom(1,40));
+                pixelCanvas.appendChild(pixel);
+            }
+        }
+        function generateColorVariant(variance) {
+            const date = new Date(); // "2011-12-12T11:48:00"
+            baseR = fit(date.getDate() / 31 * 255 + 66, 0, 255);
+            baseG = fit((date.getMonth() + 1) / 12 * 255 + 66, 0, 255);
+            baseB = fit((date.getHours() / 23 + date.getFullYear() % 100 / 99) * 255 + 77, 0, 255);
+            
+            // invert color if too dark
+            if (baseR + baseG + baseB < 400) {
+                 baseR = 255 - baseR;
+                 baseG = 255 - baseG;
+                 baseB = 255 - baseB;
+            }
+            
+            const newR = fit(getRandom(baseR - variance, baseR + variance), 0, 255);
+            const newG = fit(getRandom(baseG - variance, baseG + variance), 0, 255);
+            const newB = fit(getRandom(baseB - variance, baseB + variance), 0, 255);
+            return `rgb(${newR},${newG},${newB})`;
+        }
+		function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+		function fit(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+		window.onload = createRandomPixels;
+    </script>
     <div class="circle">
-        <!-- https://freesvg.org/echidna-vector-clip-art -->
         <img class="central-picture" src="echidna.svg" alt="an echidna">
-        <div class="text">my github</div>
-        <div class="text">my methadon</div>
+        <div class="text"><a href=https://github.com/elastic-pangolin>my github</a></div>
+        <div class="text"><a href=https://mastodon.social/@lyra@chaos.social>my mastodon</a></div>
         <div class="text">cool stuff</div>
-        <!--div class="text">this is a really long thing, it goes on for aaages and when you think it's stopped -- there's more!</div-->
         <div class="text">...</div>
         <div class="text">...</div>
     </div>
 </body>
 </html>
-
