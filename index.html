@@ -63,13 +63,6 @@
             font-size: 21px;
             /*color: #FF5733; */
         }
-
-        .text:nth-child(1) { transform: rotate(216deg) translateY(-180%); }
-        .text:nth-child(2) { transform: rotate(288deg) translateY(-180%); }
-        .text:nth-child(3) { transform: rotate(360deg) translateY(-180%); }
-        .text:nth-child(4) { transform: rotate(72deg) translateY(-180%); }
-        .text:nth-child(5) { transform: rotate(144deg) translateY(-180%); }
-        .text:nth-child(6) { transform: rotate(216deg) translateY(-180%); }
     </style>
 </head>
 <body>
@@ -110,9 +103,20 @@
         }
         function displayLinks(data) {
             const container = document.getElementById('link-container');
+            angle = 0;
+            radius = 180;
+            orbit = 1;
+            const max_orbit = 7;
             for (const item of data) {
                 const div = document.createElement('div');
                 div.className = "text";
+                div.style.transform = "rotate(" + angle + "deg) translateY(-" + radius + "%)";
+                angle += 360/max_orbit;
+                orbit += 1;
+                if (orbit > max_orbit) {
+                    orbit = 0;
+                    radius += 40;
+                }
                 const a = document.createElement('a');
                 a.href = item.url;
                 a.textContent = item.text;
@@ -128,7 +132,7 @@
         loadText();
     </script>
     <div class="circle">
-        <img class="central-picture" src="https://upload.wikimedia.org/wikipedia/commons/4/41/Echidna_%2817154%29_-_The_Noun_Project.svg" alt="an echidna">
+        <img class="central-picture" src="echidna.png" alt="an echidna">
         <div id="link-container"></div>
     </div>
 </body>
