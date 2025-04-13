@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-			background-color: #f0f0f0;
+            background-color: #f0f0f0;
         }
         
         #pixelCanvas {
@@ -102,21 +102,35 @@
             const newB = fit(getRandom(baseB - variance, baseB + variance), 0, 255);
             return `rgb(${newR},${newG},${newB})`;
         }
-		function getRandom(min, max) {
+        function getRandom(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
         }
-		function fit(value, min, max) {
+        function fit(value, min, max) {
             return Math.min(Math.max(value, min), max);
         }
-		window.onload = createRandomPixels;
+        function displayLinks(response) {
+            data = response.json()
+            const container = document.getElementById('link-container');
+            for (const item of data) {
+                const div = document.createElement('div');
+                div.className = "text";
+                const a = document.createElement('a');
+                a.href = item.url;
+                a.textContent = item.text;
+                a.target = "_blank";
+                div.appenChild(a);
+                container.appendChild(div);
+            }
+        }
+        function loadText() {
+            fetch('contents.json').then(displayLinks).catch(e => console.error(e));
+        }
+        window.onload = createRandomPixels;
+        loadText();
     </script>
     <div class="circle">
         <img class="central-picture" src="https://upload.wikimedia.org/wikipedia/commons/4/41/Echidna_%2817154%29_-_The_Noun_Project.svg" alt="an echidna">
-        <div class="text"><a href=https://github.com/elastic-pangolin>my github</a></div>
-        <div class="text"><a href=https://mastodon.social/@lyra@chaos.social>my mastodon</a></div>
-        <div class="text">cool stuff</div>
-        <div class="text">...</div>
-        <div class="text">...</div>
+        <div id="link-container"></div>
     </div>
 </body>
 </html>
